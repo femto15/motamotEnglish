@@ -8,8 +8,8 @@ import gensim.downloader as api
 
 
 # File settings
-# MODEL_PATH = "frmodel.bin"
-# GOOGLE_DRIVE_ID = "1LREFqIB3mVKOdozoJDhnHxVirIi4EhTl"
+MODEL_PATH = "envectors.bin"
+GOOGLE_DRIVE_ID = "166uEsVxPv1jD_qnv8y9w9B1pFZFUHCMM"
 
 # ✩ Reactions and mascotte images
 reactions = {
@@ -62,23 +62,22 @@ def display_mascotte(state):
         )
 
 # 🔹 Download model
-# def download_model():
-#     msg = st.empty()
-#     if not os.path.exists(MODEL_PATH) or os.path.getsize(MODEL_PATH) < 5000000:
-#         msg.info("Chargement du modèle...")
-#         url = f"https://drive.google.com/uc?id={GOOGLE_DRIVE_ID}"
-#         gdown.download(url, MODEL_PATH, quiet=False)
-#         msg.success("Modèle chargé!")
-#         time.sleep(1.5)
-#     msg.empty()
+def download_model():
+    msg = st.empty()
+    if not os.path.exists(MODEL_PATH) or os.path.getsize(MODEL_PATH) < 5000000:
+        msg.info("Chargement du modèle...")
+        url = f"https://drive.google.com/uc?id={GOOGLE_DRIVE_ID}"
+        gdown.download(url, MODEL_PATH, quiet=False)
+        msg.success("Modèle chargé!")
+        time.sleep(1.5)
+    msg.empty()
 
 # 🔹 Load model
 @st.cache_resource
 def load_model():
-    # download_model()
+    download_model()
     try:
-        # return KeyedVectors.load_word2vec_format(MODEL_PATH, binary=True)
-        return api.load('word2vec-google-news-300')
+        return KeyedVectors.load_word2vec_format(MODEL_PATH, binary=True)
     except Exception as e:
         st.error(f"Erreur lors du chargement : {e}")
         st.stop()
