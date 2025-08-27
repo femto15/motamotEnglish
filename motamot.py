@@ -4,10 +4,12 @@ import os
 import time
 import random
 from gensim.models import KeyedVectors
+import gensim.downloader as api
+
 
 # File settings
-MODEL_PATH = "frmodel.bin"
-GOOGLE_DRIVE_ID = "1LREFqIB3mVKOdozoJDhnHxVirIi4EhTl"
+# MODEL_PATH = "frmodel.bin"
+# GOOGLE_DRIVE_ID = "1LREFqIB3mVKOdozoJDhnHxVirIi4EhTl"
 
 # ✩ Reactions and mascotte images
 reactions = {
@@ -60,22 +62,23 @@ def display_mascotte(state):
         )
 
 # 🔹 Download model
-def download_model():
-    msg = st.empty()
-    if not os.path.exists(MODEL_PATH) or os.path.getsize(MODEL_PATH) < 5000000:
-        msg.info("Chargement du modèle...")
-        url = f"https://drive.google.com/uc?id={GOOGLE_DRIVE_ID}"
-        gdown.download(url, MODEL_PATH, quiet=False)
-        msg.success("Modèle chargé!")
-        time.sleep(1.5)
-    msg.empty()
+# def download_model():
+#     msg = st.empty()
+#     if not os.path.exists(MODEL_PATH) or os.path.getsize(MODEL_PATH) < 5000000:
+#         msg.info("Chargement du modèle...")
+#         url = f"https://drive.google.com/uc?id={GOOGLE_DRIVE_ID}"
+#         gdown.download(url, MODEL_PATH, quiet=False)
+#         msg.success("Modèle chargé!")
+#         time.sleep(1.5)
+#     msg.empty()
 
 # 🔹 Load model
 @st.cache_resource
 def load_model():
-    download_model()
+    # download_model()
     try:
-        return KeyedVectors.load_word2vec_format(MODEL_PATH, binary=True)
+        # return KeyedVectors.load_word2vec_format(MODEL_PATH, binary=True)
+        return api.load('word2vec-google-news-300')
     except Exception as e:
         st.error(f"Erreur lors du chargement : {e}")
         st.stop()
@@ -97,11 +100,11 @@ st.set_page_config(page_title="Akinamot", layout="centered")
 #         unsafe_allow_html=True
 #     )
 
-word1 = st.text_input("Premier mot:").strip().lower()
-word2 = st.text_input("Deuxième mot:").strip().lower()
+word1 = st.text_input("First word:").strip().lower()
+word2 = st.text_input("Second word:").strip().lower()
 THRESHOLD = 0.215
 
-if st.button("Sont-ils proches ?"):
+if st.button("Are they close ?"):
     if word1 and word2:
         model = load_model()
 
@@ -131,7 +134,7 @@ if st.button("Sont-ils proches ?"):
             )
 
             start_time = time.time()
-            flicker_choices = [("OUI", "#34D399"), ("NON", "#EF4444")]
+            flicker_choices = [("YES", "#34D399"), ("NO", "#EF4444")]
             while time.time() - start_time < 5:
                 text, color = random.choice(flicker_choices)
                 flicker_placeholder.markdown(
@@ -161,7 +164,7 @@ if st.button("Sont-ils proches ?"):
                 display_mascotte(state)
 
             final_color = "#34D399" if similarity > THRESHOLD else "#EF4444"
-            result = "OUI" if similarity > THRESHOLD else "NON"
+            result = "YES" if similarity > THRESHOLD else "NO"
 
             st.markdown(
                 f"""
@@ -172,9 +175,9 @@ if st.button("Sont-ils proches ?"):
                 unsafe_allow_html=True
             )
 
-            st.info(f"**Score de Similarité:** `{similarity:.3f}` (Seuil: {THRESHOLD})")
+            st.info(f"**Similarity score:** `{similarity:.3f}` (Seuil: {THRESHOLD})")
 
         except KeyError:
-            st.error("Un ou des mots n'ont pas été trouvés")
+            st.error("Word not found")
     else:
-        st.warning("Champs vides")
+        st.warning("Empty fields")
