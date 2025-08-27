@@ -14,32 +14,33 @@ GOOGLE_DRIVE_ID = "166uEsVxPv1jD_qnv8y9w9B1pFZFUHCMM"
 # ✩ Reactions and mascotte images
 reactions = {
     "loading": [
-        "Hmm... Je réfléchis...",
+        "Hmm... I'm thinking...",
         "Patience...",
-        "Mes circuits chauffent un peu, attendez"
+        "My circuits are heating up a bit, please wait"
     ],
     "win": [
-        "Hé ouais !",
-        "C'est gagné !",
-        "Carton plein !"
+        "Oh yeah!",
+        "You won!",
+        "Full house!"
     ],
     "fail": [
         "Ouch...",
-        "Nope, ça colle pas trop",
-        "Pas gagné cette fois !"
+        "Nope, that doesn’t really fit",
+        "Not a win this time!"
     ],
     "close": [
-        "A ce niveau là c'est pas de la proximité, c'est de la fusion",
-        "Ces deux mots sont plus proches que deux chaussettes dans un tiroir",
-        "Ben oui que c'est proche...Bravo Sherlock",
-        "L'eau ça mouille et le feu ça brûle..."
+        "At this point it's not proximity, it's fusion",
+        "Those two words are closer than two socks in a drawer",
+        "Of course they're close... Bravo Sherlock",
+        "Water is wet and fire burns..."
     ],
     "far": [
-        "Le jour et la nuit...et vous êtes pas des lumières apparement...",
-        "Je suis choqué que vous ayez tenté le coup...et je suis un algo !",
-        "C’est un grand écart lexical"
+        "Like day and night... and apparently you're not the brightest...",
+        "I'm shocked you even tried that... and I'm just an algorithm!",
+        "That’s quite a lexical split"
     ]
 }
+
 
 images = {
     "loading": "mascotte_loading.png",
