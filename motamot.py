@@ -102,7 +102,7 @@ st.set_page_config(page_title="Akinamot", layout="centered")
 
 word1 = st.text_input("First word:").strip().lower()
 word2 = st.text_input("Second word:").strip().lower()
-THRESHOLD = 0.215
+THRESHOLD = 0.120
 
 if st.button("Are they close ?"):
     if word1 and word2:
@@ -175,7 +175,7 @@ if st.button("Are they close ?"):
                 unsafe_allow_html=True
             )
 
-            st.info(f"**Similarity score:** `{similarity:.3f}` (Seuil: {THRESHOLD})")
+            st.info(f"**Similarity score:** `{similarity:.3f}` (Threshold: {THRESHOLD})")
 
         except KeyError:
             st.error("Word not found")
